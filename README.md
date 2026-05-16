@@ -1,4 +1,4 @@
-# Nextcloud High-Performance Stack (FrankenPHP + Alpine Linux)
+$# Nextcloud High-Performance Stack (FrankenPHP + Alpine Linux)
 
 An enterprise-ready, ultra-lightweight, and modern Nextcloud deployment wrapper. This stack utilizes **FrankenPHP** (a high-performance PHP application server built on top of the Caddy web server) compiled on **Alpine Linux** to ensure extremely low memory footprint, HTTP/3 support natively, and worker-mode performance.
 
@@ -9,6 +9,7 @@ This repository features an intelligent `entrypoint.sh` startup script that auto
 ## 🚀 Key Features
 
 * **FrankenPHP Application Server:** Eliminates the overhead of separate Nginx and PHP-FPM processes by bundling web serving and PHP execution into a single Go-backed binary.
+* **Native Support Optional Apps:** Seamless integration with OnlyOffice/Nextcloud-Office, Redis, Notify_Push, Elasticsearch for high performance production ready setup.
 * **Alpine Linux Substrate:** Minimal attack surface and lightning-fast container boots.
 * **Intelligent Auto-Configuration:** Automatically synchronizes Nextcloud's `config.php` database states with given environment parameters (Trusted Domains, Trusted Proxies, Overwrite Protocols).
 * **Atomic Security Hardening:** Enforces Strict-Transport-Security (HSTS), blocks access to sensitive framework folders (`/build`, `/config`, `.ht*`), and pre-caches static assets.
