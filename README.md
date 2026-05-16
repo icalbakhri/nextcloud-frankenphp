@@ -127,3 +127,11 @@ environment:
   - NC_HOST=nextcloud_app # Internal service name
   - PHONE_REGION=ID
 ```
+
+### Hi there! Thanks for stopping by. 👋
+
+Your contribution means the world to me—it keeps the servers running and the code flowing. Thank you so much for backing my open-source journey and being a vital part of this community!
+
+With love from Indonesia 🇮🇩 - [log.ical.web.id](https://log.ical.web.id)
+
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/S7Q61ZO75K)
