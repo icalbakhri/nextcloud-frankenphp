@@ -27,9 +27,12 @@ Control the entire stack lifecycle by tweaking these environment variables in yo
 | :--- | :--- | :--- |
 | `NC_DOMAIN` | `:80` | Target domain or port syntax (e.g., `cloud.example.com` or `:80`). |
 | `REVERSE_PROXY` | `no` | Toggle `yes` if deploying behind external proxies (Traefik, Nginx, Cloudflare Tunnel). |
-| `FORWARD_PORT` | *None* | External port if your network maps non-standard public ports (e.g., `8443`). |
+| `PORT_FORWARD` | *None* | External port if your network maps non-standard public ports (e.g., `8443`). |
 | `NC_HOST` | *Required* | Internal service name of the Nextcloud container used for companion calls. |
+| `ADMIN_USER` | `admin` | Nextcloud admin user for fast installation setup. |
+| `ADMIN_PASSWORD` | `admin` | Nextcloud admin password for fast installation setup. |
 | `ONLYOFFICE_HOST` | *Optional* | Container/Host address for ONLYOFFICE Document Server integration. |
+| `JWT_SECRET` | *Optional* | Secret key for ONLYOFFICE Document Server integration. |
 | `NOTIFY_PUSH_HOST`| *Optional* | Container/Host address running Nextcloud's high-performance websocket client. |
 | `ELASTICSEARCH_HOST`|*Optional* | Full URL/Host of an Elasticsearch node to initialize Full-Text Search. |
 | `REDIS_HOST` | *Optional* | Hostname of a Redis database to activate distributed caching and transactional locking. |
