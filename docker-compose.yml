@@ -1,0 +1,62 @@
+services:
+  # --- DATABASE ---
+  nc-db:
+    image: mariadb:11
+    container_name: nextcloud-db
+    restart: unless-stopped
+    command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
+    volumes:
+      # Perubahan ke bind mount
+      - /home/pod-data/nextcloud/database:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
+      - MYSQL_PASSWORD=${DB_PASSWORD}
+      - MYSQL_DATABASE=${DB_NAME}
+      - MYSQL_USER=${DB_USER}
+
+  # --- NEXTCLOUD APP (FrankenPHP + Alpine) ---
+  nc-app:
+    image: icalbakhri/nextcloud-frankenphp:v33.0.3-php8.5
+    container_name: nextcloud-app
+    restart: unless-stopped
+    depends_on:
+      - nc-db
+      - nc-elastic
+      - nc-redis
+    environment:
+      - NC_DOMAIN=${NC_DOMAIN:-:80}
+      - NC_HOST=${NC_HOST:-nextcloud-app}
+      - ADMIN_USER=${ADMIN_USER:-admin}
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD:-adminsecret}
+      - DB_TYPE=${DB_TYPE:-mariadb} # mariadb|mysql|pgsql|sqlite
+      - DB_HOST=${DB_HOST:-nextcloud-db}
+      - DB_NAME=${DB_NAME:-nextcloud}
+      - DB_USER=${DB_USER:-nextcloud}
+      - DB_PASSWORD=${DB_PASSWORD:-ChangeSecretPass}
+      - PHONE_REGION=${PHONE_REGION:-ID}
+      - SERVER_ID=${SERVER_ID:-1}
+      - REVERSE_PROXY=${REVERSE_PROXY:-no}
+      - PORT_FROWARD=${PORT_FORWARD:-8080}
+      # Optional
+      #- ONLYOFFICE_HOST=${ONLYOFFICE_HOST}
+      #- JWT_SECRET=${JWT_SECRET}
+      #- ELASTICSEARCH_HOST=http://${ELASTICSEARCH_HOST}:9200
+      #- REDIS_HOST=${REDIS_HOST}
+      #- REDIS_PASSWORD=${REDIS_PASSWORD}
+    volumes:
+      # you can use volume or bind mount
+      - ./nextcloud/app:/var/www/html
+      - ./nextcloud/caddy-data:/data #caddy path for letsencrypt cert storage
+      #- /home/pod-data/nextcloud/Caddyfile:/etc/caddy/Caddyfile #optional Caddyfile modification
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+    ports:
+      - "8080:80"
+      #- "443:443"
+      #- "443:443/udp" # Untuk HTTP/3 (QUIC)
+
+networks:
+  default:
+    driver: bridge
+    #enable_ipv6: true
+    name: nextcloud
